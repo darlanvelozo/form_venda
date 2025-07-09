@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Cliente - Megalink</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+</head>
+<body>
+    <div class="cadastro-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-wifi"></i>
+                <span>Megalink</span>
+            </div>
+            <div class="help-button">
+                <a href="https://wa.me/5589222100068" target="_blank" style="color: inherit; text-decoration: none;">
+                    <i class="fas fa-phone"></i>
+                    <span>Precisa de ajuda? (89) 2221-0068</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Plano</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Dados Pessoais</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Endereço</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Finalizar</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="form-container">
+                <!-- Step 1: Plano Selection -->
+                <div class="form-step active" id="step-1">
+                    <div class="step-header">
+                        <h2><i class="fas fa-rocket"></i> Escolha seu Plano</h2>
+                        <p>Selecione o plano que melhor atende suas necessidades</p>
+                    </div>
+                    
+                    <div class="plans-grid">
+                        <div class="plan-card" data-plan="874" data-value="99.90">
+                            <div class="plan-badge">Mais Popular</div>
+                            <div class="plan-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>Plano 620MB + Paramount</h3>
+                            <div class="plan-price">
+                                <span class="currency">R$</span>
+                                <span class="value">99</span>
+                                <span class="cents">,90</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> Download até 620 Mbps</li>
+                                <li><i class="fas fa-check"></i> Upload simétrico</li>
+                                <li><i class="fas fa-check"></i> Wi-Fi 6 gratuito</li>
+                                <li><i class="fas fa-check"></i> Paramount+ incluso</li>
+                                <li><i class="fas fa-check"></i> Suporte 24h</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-card" data-plan="904" data-value="117.90">
+                            <div class="plan-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>Plano 820MB + Paramount</h3>
+                            <div class="plan-price">
+                                <span class="currency">R$</span>
+                                <span class="value">117</span>
+                                <span class="cents">,90</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> Download até 820 Mbps</li>
+                                <li><i class="fas fa-check"></i> Upload simétrico</li>
+                                <li><i class="fas fa-check"></i> Wi-Fi 6 gratuito</li>
+                                <li><i class="fas fa-check"></i> Paramount+ incluso</li>
+                                <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-card" data-plan="786" data-value="147.90">
+                            <div class="plan-badge premium">Premium</div>
+                            <div class="plan-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3>Plano 1GB Turbo + Max + Paramount</h3>
+                            <div class="plan-price">
+                                <span class="currency">R$</span>
+                                <span class="value">147</span>
+                                <span class="cents">,90</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> Download até 1 Gbps</li>
+                                <li><i class="fas fa-check"></i> Upload simétrico</li>
+                                <li><i class="fas fa-check"></i> Wi-Fi 6 Pro gratuito</li>
+                                <li><i class="fas fa-check"></i> HBO Max + Paramount+</li>
+                                <li><i class="fas fa-check"></i> Suporte VIP 24h</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="payment-options">
+                        <h4>Escolha o vencimento da fatura:</h4>
+                        <div class="payment-grid">
+                            <div class="payment-option" data-vencimento="9">
+                                <input type="radio" name="vencimento" id="venc5" value="9">
+                                <label for="venc5">Dia 5</label>
+                            </div>
+                            <div class="payment-option" data-vencimento="4">
+                                <input type="radio" name="vencimento" id="venc10" value="4">
+                                <label for="venc10">Dia 10</label>
+                            </div>
+                            <div class="payment-option" data-vencimento="5">
+                                <input type="radio" name="vencimento" id="venc15" value="5">
+                                <label for="venc15">Dia 15</label>
+                            </div>
+                            <div class="payment-option" data-vencimento="6">
+                                <input type="radio" name="vencimento" id="venc20" value="6">
+                                <label for="venc20">Dia 20</label>
+                            </div>
+                            <div class="payment-option" data-vencimento="10">
+                                <input type="radio" name="vencimento" id="venc30" value="10">
+                                <label for="venc30">Dia 30</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Personal Data -->
+                <div class="form-step" id="step-2">
+                    <div class="step-header">
+                        <h2><i class="fas fa-user"></i> Seus Dados Pessoais</h2>
+                        <p>Precisamos de algumas informações básicas para continuar</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="nome">Nome Completo *</label>
+                            <input type="text" id="nome" name="nome" required>
+                            <div class="field-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpf">CPF *</label>
+                            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+                            <div class="field-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rg">RG *</label>
+                            <input type="text" id="rg" name="rg" placeholder="00.000.000-0" required>
+                            <div class="field-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone">Telefone/WhatsApp *</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(89) 2221-0068" required>
+                            <div class="field-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nascimento">Data de Nascimento *</label>
+                            <input type="date" id="nascimento" name="nascimento" required>
+                            <div class="field-error"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Address -->
+                <div class="form-step" id="step-3">
+                    <div class="step-header">
+                        <h2><i class="fas fa-map-marker-alt"></i> Endereço de Instalação</h2>
+                        <p>Onde você deseja instalar a internet?</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cep">CEP *</label>
+                            <input type="text" id="cep" name="cep" placeholder="00000-000" required>
+                            <div class="field-error"></div>
+                            <div class="field-help">
+                                <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">
+                                    <i class="fas fa-search"></i> Não sei meu CEP
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="endereco">Endereço *</label>
+                            <input type="text" id="endereco" name="endereco" placeholder="Rua, Avenida..." required>
+                            <div class="field-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numero">Número *</label>
+                            <input type="text" id="numero" name="numero" placeholder="123" required>
+                            <div class="field-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bairro">Bairro *</label>
+                            <input type="text" id="bairro" name="bairro" required>
+                            <div class="field-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" id="cidade" name="cidade" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="text" id="estado" name="estado" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Summary -->
+                <div class="form-step" id="step-4">
+                    <div class="step-header">
+                        <h2><i class="fas fa-check-circle"></i> Confirme seus Dados</h2>
+                        <p>Revise as informações antes de finalizar</p>
+                    </div>
+                    
+                    <div class="summary-container">
+                        <div class="summary-section">
+                            <h3><i class="fas fa-wifi"></i> Plano Selecionado</h3>
+                            <div class="summary-content" id="summary-plan">
+                                <!-- Will be filled by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="summary-section">
+                            <h3><i class="fas fa-user"></i> Dados Pessoais</h3>
+                            <div class="summary-content" id="summary-personal">
+                                <!-- Will be filled by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="summary-section">
+                            <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
+                            <div class="summary-content" id="summary-address">
+                                <!-- Will be filled by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="terms-section">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="terms" required>
+                                <span class="checkmark"></span>
+                                Aceito os <a href="#" target="_blank">termos de serviço</a> e 
+                                <a href="#" target="_blank">política de privacidade</a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </button>
+                    
+                    <button type="button" class="btn btn-primary" id="nextBtn">
+                        Continuar <i class="fas fa-arrow-right"></i>
+                    </button>
+                    
+                    <button type="button" class="btn btn-success" id="submitBtn" style="display: none;">
+                        <i class="fas fa-check"></i> Finalizar Cadastro
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Success Modal -->
+        <div id="successModal" class="modal">
+            <div class="modal-content success">
+                <div class="modal-header">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Cadastro Realizado com Sucesso!</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Parabéns! Seu cadastro foi realizado com sucesso.</p>
+                    <p>Em breve nossa equipe entrará em contato para agendar a instalação.</p>
+                    <div class="contact-info">
+                        <p><strong>Dúvidas?</strong></p>
+                        <p><a href="https://wa.me/5589222100068" target="_blank" style="color: inherit; text-decoration: none;"><i class="fas fa-phone"></i> (89) 2221-0068</a></p>
+                        <p><i class="fas fa-envelope"></i> contato@megalinkpiaui.com.br</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="window.location.reload()">
+                        Fazer Novo Cadastro
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Modal -->
+        <div id="loadingModal" class="modal">
+            <div class="modal-content loading">
+                <div class="loading-spinner"></div>
+                <p>Processando seu cadastro...</p>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div id="errorModal" class="modal">
+            <div class="modal-content error">
+                <div class="modal-header">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Ops! Algo deu errado</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage">Ocorreu um erro ao processar seu cadastro. Tente novamente.</p>
+                    <div class="contact-info">
+                        <p><strong>Precisa de ajuda?</strong></p>
+                        <p><a href="https://wa.me/5589222100068" target="_blank" style="color: inherit; text-decoration: none;"><i class="fas fa-phone"></i> (89) 2221-0068</a></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="closeErrorModal()">
+                        Tentar Novamente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/cadastro.js') }}"></script>
+</body>
+</html> 

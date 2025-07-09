@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Acompanhamento de Leads</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-chart-line"></i> Dashboard de Leads</h1>
+                <div class="header-actions">
+                    <a href="/cadastro" class="btn btn-success" style="margin-right: 10px;">
+                        <i class="fas fa-user-plus"></i> Novo Cliente
+                    </a>
+                    <button id="refreshBtn" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i> Atualizar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Carregando dados...</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent" style="display: none;">
+            <!-- Statistics Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalLeads">0</h3>
+                            <p>Total de Leads</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalProspectos">0</h3>
+                            <p>Total de Prospectos</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="leadsHoje">0</h3>
+                            <p>Leads Hoje</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="valorTotal">R$ 0,00</h3>
+                            <p>Valor Total</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="charts-grid">
+                    <!-- Status Chart -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-pie"></i> Status dos Prospectos</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Trends Chart -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-line"></i> Leads dos Últimos 7 Dias</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tables Section -->
+            <section class="tables-section">
+                <div class="tables-grid">
+                    <!-- Top Companies -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3><i class="fas fa-building"></i> Top Empresas</h3>
+                        </div>
+                        <div class="table-container">
+                            <table id="empresasTable">
+                                <thead>
+                                    <tr>
+                                        <th>Empresa</th>
+                                        <th>Leads</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Top Origins -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3><i class="fas fa-source"></i> Top Origens</h3>
+                        </div>
+                        <div class="table-container">
+                            <table id="origensTable">
+                                <thead>
+                                    <tr>
+                                        <th>Origem</th>
+                                        <th>Leads</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed Tables -->
+            <section class="detailed-section">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="leads">
+                        <i class="fas fa-users"></i> Leads
+                    </button>
+                    <button class="tab-button" data-tab="prospectos">
+                        <i class="fas fa-user-check"></i> Prospectos
+                    </button>
+                </div>
+
+                <!-- Leads Tab -->
+                <div class="tab-content active" id="leads-tab">
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <input type="text" id="leadsSearch" placeholder="Buscar leads...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="pagination-info">
+                            <span id="leadsInfo">Carregando...</span>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="leadsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome/Razão Social</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Valor</th>
+                                    <th>Empresa</th>
+                                    <th>Origem</th>
+                                    <th>Data Cadastro</th>
+                                    <th>Status API</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="leadsPagination"></div>
+                </div>
+
+                <!-- Prospectos Tab -->
+                <div class="tab-content" id="prospectos-tab">
+                    <div class="table-controls">
+                        <div class="filters">
+                            <select id="statusFilter">
+                                <option value="">Todos os Status</option>
+                            </select>
+                        </div>
+                        <div class="pagination-info">
+                            <span id="prospectosInfo">Carregando...</span>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="prospectosTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome Prospecto</th>
+                                    <th>ID Hubsoft</th>
+                                    <th>Status</th>
+                                    <th>Data Criação</th>
+                                    <th>Data Processamento</th>
+                                    <th>Tentativas</th>
+                                    <th>Tempo Proc.</th>
+                                    <th>Erro</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="prospectosPagination"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Performance Metrics -->
+        <section class="performance-section">
+            <div class="performance-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="prospectosErro">0</h3>
+                        <p>Prospectos com Erro</p>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="tempoMedio">0s</h3>
+                        <p>Tempo Médio Processamento</p>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="mediaValor">R$ 0,00</h3>
+                        <p>Valor Médio por Lead</p>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="leadsComValor">0</h3>
+                        <p>Leads com Valor</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Lead Details -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalhes do Lead</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="leadDetails">
+                <!-- Lead details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html> 
