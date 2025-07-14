@@ -21,10 +21,10 @@ class CadastroCliente {
         }
 
         // RG mask
-        const rgInput = document.getElementById('rg');
-        if (rgInput) {
-            Inputmask('99.999.999-*').mask(rgInput);
-        }
+        //const rgInput = document.getElementById('rg');
+        //if (rgInput) {
+        //    Inputmask('99.999.999-*').mask(rgInput);
+        //}
 
         // Phone mask
         const telefoneInput = document.getElementById('telefone');
