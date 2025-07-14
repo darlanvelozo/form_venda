@@ -30,12 +30,17 @@ def get_db_connection():
 
 @app.route('/')
 def index():
-    """Página principal do dashboard"""
+    """Página principal - Cadastro de clientes"""
+    return render_template('cadastro.html')
+
+@app.route('/dashboard')
+def dashboard():
+    """Página do dashboard de leads"""
     return render_template('dashboard.html')
 
 @app.route('/cadastro')
 def cadastro():
-    """Página de cadastro de clientes"""
+    """Página de cadastro de clientes (redirecionamento)"""
     return render_template('cadastro.html')
 
 @app.route('/api/stats')
